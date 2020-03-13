@@ -6,5 +6,23 @@ module.exports = merge(base, {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        exclude: /node_modeuls/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [require('tailwindcss'), require('autoprefixer')]
+            }
+          }
+        ]
+      }
+    ]
   }
 })
