@@ -3,3 +3,17 @@
 @import 'tailwindcss/components';
 
 @import 'tailwindcss/utilities';
+
+.header {
+  @apply box-border flex justify-center py-6 fixed z-10 w-full top-0 left-0 bg-white border-b;
+}
+
+.search {
+  @apply appearance-none outline-none bg-gray-300 inline-block w-full h-12 rounded-lg px-4 text-gray-900 text-lg;
+}
+
+.main {
+  @apply mt-24 px-4 mx-auto w-full;
+  height: calc(100vh - 6rem - 1px);
+  overflow-y: scroll;
+}

@@ -57,32 +57,62 @@ const Link = ({ href, text }) => (
   </a>
 )
 const GithubSearch = ({ search }) => (
-  <div className="pt-6" onScroll={[setScroll, event => {console.log(event);return event.scrollTop}]}>
+  <div
+    className="pt-6"
+    onScroll={[
+      setScroll,
+      event => {
+        console.log(event)
+        return event.scrollTop
+      }
+    ]}
+  >
     {search.items &&
-      search.items.map(({ name, description, owner, html_url, homepage }) => (
-        <div className="flex flex-row pl-0 py-0 md:pl-4 mb-6 md:py-4 pr-4 rounded shadow">
-          <div className="md:flex-shrink-0">
-            <img
-              className="rounded box-border md:border block h-32 md:w-24 md:h-24"
-              src={owner.avatar_url}
-            />
-          </div>
-          <div className="pb-4 md:pb-0 ml-4 text-gray-600 flex-1 flex flex-col justify-between">
-            <div>
-              <h3 className="text-xl leading-tight text-gray-900">{name}</h3>
-              <p className="text-sm leading-tight">{description}</p>
+      search.items.map(
+        ({
+          name,
+          description,
+          owner,
+          html_url,
+          homepage,
+          stargazers_count,
+          forks_count
+        }) => (
+          <div className="flex flex-col sm:flex-row px-4 mb-6 py-4 rounded shadow">
+            <div className="md:flex-shrink-0">
+              <img
+                className="rounded box-border md:border block h-40 w-full object-cover object-center sm:w-24 sm:h-24"
+                src={owner.avatar_url}
+              />
             </div>
-            <p className="mt-2">
-              <Link href={html_url} text="Github" />
-              {homepage && (
+            <div className="sm:ml-4 mt-2 sm:mt-0 text-gray-600 flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex flex-col sm:flex-row justify-between text-sm">
+                  <h3 className="text-xl leading-tight text-gray-900">
+                    {name}
+                  </h3>
+                  <span className="inline-block">
+                    <em className="text-purple-500">{stargazers_count}</em>stars{' '}
+                    <em className="text-purple-500">{forks_count}</em>forks
+                  </span>
+                </div>
+                <p className="text-sm leading-tight mt-1">{description}</p>
+              </div>
+              <p className="mt-2">
+                <Link href={html_url} text="Github" />
                 <span className="ml-2">
-                  <Link href={homepage} text="Home" />
+                  <Link href={owner.html_url} text="Owner" />
                 </span>
-              )}
-            </p>
+                {homepage && (
+                  <span className="ml-2">
+                    <Link href={homepage} text="Home" />
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      )}
   </div>
 )
 
@@ -101,9 +131,9 @@ const Counter = ({ count }) => (
 )
 
 const Search = () => (
-  <div className="w-full md:w-1/2 px-4">
+  <div className="w-full lg:w-3/4 xl:w-1/2 px-4">
     <input
-      className="appearance-none outline-none bg-gray-300 inline-block w-full h-12 rounded-lg px-4 text-gray-900 text-lg"
+      className="search"
       placeholder="Press Enter to Search"
       onKeyup={[triggerSearch, event => event.keyCode]}
       onInput={[setNewValue, event => event.target.value]}
@@ -113,10 +143,10 @@ const Search = () => (
 
 const view = state => (
   <div className="text-gray-900 font-light">
-    <header className="flex justify-center py-6 fixed z-10 w-full t-0 l-0 bg-white border-b">
+    <header className="header">
       <Search />
     </header>
-    <main className="pt-24 px-4 mx-auto w-full md:w-1/2">
+    <main className="main  lg:w-3/4 xl:w-1/2">
       {state.fetching ? (
         <div className="pt-6 text-center">loading...</div>
       ) : (
