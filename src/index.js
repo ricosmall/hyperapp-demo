@@ -188,7 +188,7 @@ const Main = state => {
 }
 
 const view = state => (
-  <div className="text-gray-900 font-light">
+  <div className="text-gray-900 font-light font-sans">
     <header className="header">
       <Search />
     </header>
