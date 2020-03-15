@@ -8,7 +8,10 @@ import './index.css'
 const init = {
   count: 1,
   query: 'jsonresume',
-  search: {}
+  search: {},
+  page: 1,
+  finished: false,
+  perpage: 30
 }
 
 /**
@@ -22,7 +25,7 @@ const decrement = state => ({ ...state, count: state.count - 1 })
 const triggerSearch = (state, keyCode) => {
   // When click `Enter` and state.query is not null, trigger search request
   if (keyCode !== 13 || !state.query) return state
-  return fetchSearch(state)
+  return fetchSearch({ ...state, page: 1, finished: false, search: {} })
 }
 
 const setNewValue = (state, value) => ({ ...state, query: value.trim() })
@@ -30,18 +33,53 @@ const setNewValue = (state, value) => ({ ...state, query: value.trim() })
 const fetchSearch = state => [
   { ...state, fetching: true },
   Http({
-    url: `https://api.github.com/search/repositories?q=${state.query}&sort=stars`,
+    url: `https://api.github.com/search/repositories?page=${state.page}&per_page=${state.perpage}&q=${state.query}&sort=stars`,
     response: 'json',
     action: getSearch
   })
 ]
 
-const getSearch = (state, search) => ({ ...state, search, fetching: false })
-
-const setScroll = (state, value) => {
-  console.log(value)
-  return state
+const getSearch = (state, search) => {
+  const { search: oldSearch } = state
+  let newSearch = search
+  if (oldSearch.items) {
+    newSearch = { ...oldSearch, items: [...oldSearch.items, ...search.items] }
+  }
+  if (!newSearch.items || !newSearch.items.length) newSearch = {}
+  return { ...state, search: newSearch, fetching: false }
 }
+
+const getNextPage = state => fetchSearch({ ...state, page: state.page + 1 })
+
+const toggleFinished = state => ({ ...state, finished: !state.finished })
+
+const handleScroll = (dispatch, { action, finish, state }) => {
+  const hanlder = e => {
+    // noMore to load
+    console.log(state.finished)
+    if (state.finished) return
+    const { perpage, page, search } = state
+    if (search && search.total_count) {
+      const noMore = search.total_count - page * perpage <= 0
+      if (noMore) {
+        dispatch(finish)
+      }
+    }
+
+    const { clientHeight, scrollTop, scrollHeight } = document.documentElement
+    const atBottom = scrollTop > 0 && clientHeight + scrollTop >= scrollHeight
+    if (atBottom) {
+      dispatch(action)
+    }
+  }
+  window.addEventListener('scroll', hanlder)
+  return () => window.removeEventListener('scroll', hanlder)
+}
+
+const subscriptions = state => [
+  handleScroll,
+  { action: getNextPage, finish: toggleFinished, state }
+]
 
 /**
  * components
@@ -49,7 +87,7 @@ const setScroll = (state, value) => {
 
 const Link = ({ href, text }) => (
   <a
-    className="box-border inline-block border px-4 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white border-blue-500 align-top"
+    className="link px-4 text-blue-500 hover:bg-blue-500 hover:text-white border-blue-500"
     target="_blank"
     href={href}
   >
@@ -57,16 +95,7 @@ const Link = ({ href, text }) => (
   </a>
 )
 const GithubSearch = ({ search }) => (
-  <div
-    className="pt-6"
-    onScroll={[
-      setScroll,
-      event => {
-        console.log(event)
-        return event.scrollTop
-      }
-    ]}
-  >
+  <div className="pt-6">
     {search.items &&
       search.items.map(
         ({
@@ -81,7 +110,7 @@ const GithubSearch = ({ search }) => (
           <div className="flex flex-col sm:flex-row px-4 mb-6 py-4 rounded shadow">
             <div className="md:flex-shrink-0">
               <img
-                className="rounded box-border md:border block h-40 w-full object-cover object-center sm:w-24 sm:h-24"
+                className="image h-40 w-full sm:w-24 sm:h-24"
                 src={owner.avatar_url}
               />
             </div>
@@ -141,18 +170,30 @@ const Search = () => (
   </div>
 )
 
+const Loading = () => <div className="py-6 text-center">loading...</div>
+
+const NoContent = () => <div className="py-6 text-center">Nothing Found!</div>
+
+const Main = state => {
+  if (state.fetching) {
+    if (!state.search.items) return Loading()
+    return (
+      <div>
+        {GithubSearch(state)}
+        {Loading()}
+      </div>
+    )
+  }
+  if (!state.search.items) return NoContent()
+  return GithubSearch(state)
+}
+
 const view = state => (
   <div className="text-gray-900 font-light">
     <header className="header">
       <Search />
     </header>
-    <main className="main  lg:w-3/4 xl:w-1/2">
-      {state.fetching ? (
-        <div className="pt-6 text-center">loading...</div>
-      ) : (
-        GithubSearch(state)
-      )}
-    </main>
+    <main className="main lg:w-3/4 xl:w-1/2">{Main(state)}</main>
   </div>
 )
 
@@ -164,4 +205,4 @@ const node = document.getElementById('app')
 /**
  * create app
  */
-app({ node, view, init: fetchSearch(init) })
+app({ node, view, init: fetchSearch(init), subscriptions })

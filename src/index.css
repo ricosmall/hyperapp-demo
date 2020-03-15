@@ -14,6 +14,12 @@
 
 .main {
   @apply mt-24 px-4 mx-auto w-full;
-  height: calc(100vh - 6rem - 1px);
-  overflow-y: scroll;
+}
+
+.link {
+  @apply box-border inline-block border rounded-full;  
+}
+
+.image {
+  @apply rounded box-border border block object-cover object-center;
 }
