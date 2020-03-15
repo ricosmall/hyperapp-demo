@@ -162,7 +162,7 @@ const Search = () => (
   <div className="w-full lg:w-3/4 xl:w-1/2 px-4">
     <input
       className="search"
-      placeholder="Press Enter to Search"
+      placeholder="Press Enter to Search Github Repositories"
       onKeyup={[triggerSearch, event => event.keyCode]}
       onInput={[setNewValue, event => event.target.value]}
     />
