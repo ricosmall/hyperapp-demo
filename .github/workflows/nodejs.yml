@@ -12,7 +12,16 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Build and Deploy 🚀
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x 
+      - name: Npm Install
+        run: npm install
+      - name: Npm Build
+        run: npm run build
+
+      - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
