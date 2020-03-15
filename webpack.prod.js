@@ -34,7 +34,10 @@ const config = merge(base, {
                 require('tailwindcss'),
                 require('autoprefixer'),
                 require('@fullhuman/postcss-purgecss')({
-                  content: ['./src/index.js']
+                  content: ['./src/index.js'],
+                  // Include any special characters you're using in this regular expression
+                  defaultExtractor: content =>
+                    content.match(/[\w-/:]+(?<!:)/g) || []
                 })
               ]
             }
