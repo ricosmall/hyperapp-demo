@@ -55,8 +55,7 @@ const toggleFinished = state => ({ ...state, finished: !state.finished })
 
 const handleScroll = (dispatch, { action, finish, state }) => {
   const hanlder = e => {
-    // noMore to load
-    console.log(state.finished)
+    // no more to load
     if (state.finished) return
     const { perpage, page, search } = state
     if (search && search.total_count) {
