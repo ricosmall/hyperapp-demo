@@ -26,9 +26,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Npm Install and Build
-    - run: |
-        npm install
-        npm run build --if-present
+    - run: npm install
+    - run: npm run build --if-present
     
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
