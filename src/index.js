@@ -7,7 +7,7 @@ import './index.css'
  */
 const init = {
   count: 1,
-  query: 'jsonresume',
+  query: 'hyperapp',
   search: {},
   page: 1,
   finished: false,
