@@ -7,4 +7,6 @@ A simple github repositories search tool.
 - Built with [hyperapp](https://hyperapp.dev)
 - Styled with [tailwindcss](https://tailwindcss.com)
 - Packaged with [webpack](https://webpack.js.org)
-- Auto build and deploy with [Github Actions](https://help.github.com/en/actions)
+- Continuously deployed with [Github Actions](https://help.github.com/en/actions)
+
+Hyperapp is an awesome tiny framework you can used to build web application, to see more wonderful web application built with hyperapp, just go to [awesome-hyperapp](https://github.com/jorgebucaran/awesome-hyperapp).
