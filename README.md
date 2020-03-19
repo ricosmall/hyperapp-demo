@@ -4,7 +4,7 @@
 
 A simple tool for searching Github repositories. It's responsive, just try to resize the window and see result.
 
-## Use What
+## Features
 
 - Built with [hyperapp](https://hyperapp.dev)
 - Styled with [tailwindcss](https://tailwindcss.com)
