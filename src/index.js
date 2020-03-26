@@ -86,7 +86,7 @@ const subscriptions = state => [
 
 const Link = ({ href, text }) => (
   <a
-    className="link px-4 text-blue-500 hover:bg-blue-500 hover:text-white border-blue-500"
+    className="link px-4 py-1 text-blue-500 hover:bg-blue-500 hover:text-white border-blue-500"
     target="_blank"
     href={href}
   >
