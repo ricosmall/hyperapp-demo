@@ -13,4 +13,3 @@ A simple tool for searching Github repositories. It's responsive, just try to re
 
 > Hyperapp is an awesome tiny framework you can used to build web application, to see more wonderful web application built with hyperapp, just go to [awesome-hyperapp](https://github.com/jorgebucaran/awesome-hyperapp).
 
-> Trigger
