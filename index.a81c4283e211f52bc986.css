@@ -312,10 +312,6 @@ img {
   border-style: solid;
 }
 
-input::-webkit-input-placeholder {
-  color: #a0aec0;
-}
-
 input::-moz-placeholder {
   color: #a0aec0;
 }
@@ -400,15 +396,21 @@ img {
 }
 
 .hover\:bg-gray-400:hover {
+  --bg-opacity: 1;
   background-color: #cbd5e0;
+  background-color: rgba(203, 213, 224, var(--bg-opacity));
 }
 
 .hover\:bg-blue-500:hover {
+  --bg-opacity: 1;
   background-color: #4299e1;
+  background-color: rgba(66, 153, 225, var(--bg-opacity));
 }
 
 .border-blue-500 {
+  --border-opacity: 1;
   border-color: #4299e1;
+  border-color: rgba(66, 153, 225, var(--border-opacity));
 }
 
 .rounded {
@@ -459,6 +461,18 @@ img {
 
 .h-40 {
   height: 10rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-6xl {
+  font-size: 4rem;
 }
 
 .leading-tight {
@@ -519,35 +533,33 @@ img {
 }
 
 .text-gray-600 {
+  --text-opacity: 1;
   color: #718096;
+  color: rgba(113, 128, 150, var(--text-opacity));
 }
 
 .text-gray-900 {
+  --text-opacity: 1;
   color: #1a202c;
+  color: rgba(26, 32, 44, var(--text-opacity));
 }
 
 .text-blue-500 {
+  --text-opacity: 1;
   color: #4299e1;
+  color: rgba(66, 153, 225, var(--text-opacity));
 }
 
 .text-purple-500 {
+  --text-opacity: 1;
   color: #9f7aea;
+  color: rgba(159, 122, 234, var(--text-opacity));
 }
 
 .hover\:text-white:hover {
+  --text-opacity: 1;
   color: #fff;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-}
-
-.text-6xl {
-  font-size: 4rem;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 .w-full {
@@ -565,7 +577,9 @@ img {
   width: 100%;
   top: 0;
   left: 0;
+  --bg-opacity: 1;
   background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
   border-bottom-width: 1px;
 }
 
@@ -574,14 +588,18 @@ img {
      -moz-appearance: none;
           appearance: none;
   outline: 0;
+  --bg-opacity: 1;
   background-color: #e2e8f0;
+  background-color: rgba(226, 232, 240, var(--bg-opacity));
   display: inline-block;
   width: 100%;
   height: 3rem;
   border-radius: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  --text-opacity: 1;
   color: #1a202c;
+  color: rgba(26, 32, 44, var(--text-opacity));
   font-size: 1.125rem;
 }
 
