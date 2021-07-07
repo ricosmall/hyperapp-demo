@@ -621,7 +621,8 @@ img {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  outline: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   --bg-opacity: 1;
   background-color: #e2e8f0;
   background-color: rgba(226, 232, 240, var(--bg-opacity));
